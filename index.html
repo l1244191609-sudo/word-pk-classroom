@@ -1,35 +1,1094 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>课本单词PK</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;color:#0f172a;background:linear-gradient(135deg,#fff7ed,#f8fbff 50%,#eef8f1);min-height:100vh}button,input,textarea{font:inherit}button{cursor:pointer}.app{max-width:1480px;margin:auto;min-height:100vh;padding:16px;display:flex;flex-direction:column;gap:16px}header{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;border-bottom:1px solid #dbe2ea;padding-bottom:16px}.pill{display:inline-block;background:#fef3c7;color:#78350f;border:1px solid #fbbf24;border-radius:999px;padding:6px 12px;font-weight:800}h1{margin:8px 0 0;font-size:clamp(32px,5vw,58px);line-height:1.04}h2,p{margin:0}.stats{display:grid;grid-template-columns:repeat(3,90px);gap:8px;background:#ffffffc9;border:1px solid #dbe2ea;border-radius:8px;padding:8px}.stat{padding:8px}.stat span{font-size:14px;color:#64748b}.stat strong{display:block;font-size:30px}.layout{display:grid;grid-template-columns:360px 1fr;gap:16px;flex:1}.panel{background:#ffffffd9;border:1px solid #dbe2ea;border-radius:8px;box-shadow:0 10px 28px #0f172a12}.side{display:grid;gap:16px;align-content:start}.box{padding:16px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}textarea{width:100%;min-height:200px;resize:vertical;border:1px solid #cbd5e1;border-radius:8px;padding:12px;background:#fff;font-size:16px;line-height:1.6}.btn{min-height:42px;border:1px solid transparent;border-radius:8px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;color:white;background:#0f172a;font-weight:900}.btn.secondary{background:white;color:#0f172a;border-color:#cbd5e1}.btn.red{background:#dc2626}.btn.blue{background:#2563eb}.btn.green{background:#059669}.actions{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.bar{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-bottom:14px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#f97316,#22c55e)}.row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;padding:10px 12px;margin-top:8px}.badge{border-radius:999px;background:#fff;padding:4px 9px;font-size:14px;font-weight:900;color:#475569}.arenaWrap{display:grid;gap:16px;grid-template-rows:auto minmax(520px,1fr) auto}.score{display:grid;grid-template-columns:1fr 1fr;gap:12px}.team{border-radius:8px;padding:16px;border:2px solid}.team.red{border-color:#dc262640;background:#fef2f2;color:#b91c1c}.team.blue{text-align:right;border-color:#2563eb40;background:#eff6ff;color:#1d4ed8}.team span{font-weight:900}.team strong{display:block;font-size:clamp(58px,8vw,92px);line-height:.95}.arena{position:relative;min-height:520px;overflow:hidden;border-radius:8px;border:1px solid #dbe2ea;background:white;box-shadow:0 18px 40px #0f172a24}.arenaBg{position:absolute;inset:0;display:grid;grid-template-columns:1fr 178px 1fr}.redZone{background:linear-gradient(135deg,#dc2626,#fb7185)}.blueZone{background:linear-gradient(135deg,#2563eb,#38bdf8)}.timerCol{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:white;border-inline:1px solid #cbd5e1;padding:16px}.timer{width:130px;height:130px;display:grid;place-items:center;border-radius:999px;border:8px solid #f1f5f9;background:#0f172a;color:white;font-size:54px;font-weight:1000}.timerInput{width:100%;height:44px;border:1px solid #cbd5e1;border-radius:8px;text-align:center;font-size:18px;font-weight:900}.card{position:absolute;inset:0;display:grid;place-items:center;padding:24px;pointer-events:none}.qcard{width:min(760px,100%);pointer-events:auto;text-align:center;color:white;background:#0f172a;border:4px solid white;border-radius:8px;box-shadow:0 24px 60px #0f172a59;padding:clamp(20px,4vw,34px)}.meta{min-height:32px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px}.meta span{border-radius:999px;background:#ffffff1a;padding:6px 12px;font-size:14px;font-weight:900}.meta .rw{background:#dc2626}.meta .bw{background:#2563eb}.word{overflow-wrap:anywhere;font-size:clamp(48px,8vw,90px);line-height:1;font-weight:1000}.answer{margin-top:22px;min-height:96px;border-radius:8px;background:#ffffff14;padding:16px}.meaning{color:#fde68a;font-size:clamp(24px,3.4vw,38px);font-weight:1000}.example{margin-top:8px;color:#ffffffbf;font-size:20px}.waiting{display:grid;min-height:64px;place-items:center;color:#ffffff61;font-size:28px;font-weight:900}.controls{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;padding:12px}.tools{display:grid;grid-template-columns:repeat(4,64px);gap:8px}.bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid{display:grid;max-height:220px;overflow:auto;gap:8px;grid-template-columns:repeat(3,1fr)}.item{text-align:left;border:1px solid #e2e8f0;background:#f8fafc;color:#0f172a;border-radius:8px;padding:10px 12px}.item.active{background:#0f172a;color:#fff}.item strong,.item span,.row strong,.row p{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.item span{margin-top:3px;opacity:.68;font-size:14px}.miss{background:#fff1f2;border-color:#fecdd3}.miss p{color:#9f1239;font-size:14px}.empty{min-height:110px;display:grid;place-items:center;border:1px dashed #cbd5e1;border-radius:8px;background:#f8fafc;color:#64748b;font-weight:800}.hidden{display:none}@media(max-width:1100px){header,.layout,.bottom{grid-template-columns:1fr}.arenaBg{grid-template-columns:1fr}.redZone,.blueZone{display:none}.timerCol{position:absolute;inset:auto 0 0;flex-direction:row;border-top:1px solid #cbd5e1}.timer{width:92px;height:92px;font-size:38px}.timerInput{width:96px}}@media(max-width:700px){.app{padding:10px}.stats,.score,.controls,.grid{grid-template-columns:1fr}.tools{grid-template-columns:repeat(4,1fr)}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>课本单词 PK</title>
+  <meta name="description" content="教师投屏用的课本单词 PK 网站，支持导入词库、红蓝队计分、倒计时和错词复盘。" />
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.14);
+      --paper: rgba(255, 255, 255, 0.92);
+      --red: #e11d48;
+      --red-deep: #9f1239;
+      --blue: #2563eb;
+      --blue-deep: #1e3a8a;
+      --gold: #f59e0b;
+      --green: #059669;
+      --shadow: 0 18px 50px rgba(16, 24, 40, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(115deg, rgba(225, 29, 72, 0.12), transparent 32%),
+        linear-gradient(245deg, rgba(37, 99, 235, 0.14), transparent 34%),
+        #f6f8fb;
+      font-family: "Microsoft YaHei", "PingFang SC", Inter, system-ui, sans-serif;
+    }
+
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; touch-action: manipulation; }
+    h1, h2, p { margin: 0; }
+
+    .app {
+      width: min(1600px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 14px;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 8px 28px rgba(16, 24, 40, 0.08);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      color: #7c2d12;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 56px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .stat {
+      min-width: 82px;
+      padding: 10px;
+      border: 1px solid rgba(16, 24, 40, 0.1);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 30px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 10px 32px rgba(16, 24, 40, 0.08);
+    }
+
+    .side {
+      display: grid;
+      grid-template-rows: auto auto minmax(160px, 1fr);
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .importer, .settings, .review, .word-bank { padding: 14px; }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .panel-head h2 { font-size: 18px; }
+
+    textarea {
+      width: 100%;
+      min-height: 190px;
+      resize: vertical;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      background: white;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.55;
+      outline: none;
+    }
+
+    textarea:focus, input:focus, select:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.24);
+    }
+
+    .btn {
+      min-height: 44px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: white;
+      background: #111827;
+      font-weight: 900;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(16, 24, 40, 0.18);
+    }
+
+    .btn.secondary {
+      color: var(--ink);
+      background: white;
+      border-color: var(--line);
+    }
+    .btn.red { background: var(--red); }
+    .btn.blue { background: var(--blue); }
+    .btn.green { background: var(--green); }
+    .btn.small { min-height: 36px; padding: 0 10px; font-size: 14px; }
+    .btn.icon { width: 52px; padding: 0; font-size: 20px; }
+
+    .import-actions, .setting-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .field { display: grid; gap: 6px; }
+    .field label {
+      color: #344054;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .field input, .field select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0 10px;
+      background: white;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .hidden { display: none; }
+    .review {
+      min-height: 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+    }
+
+    .bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--green));
+    }
+
+    .miss-list {
+      min-height: 0;
+      overflow: auto;
+      margin-top: 10px;
+      padding-right: 4px;
+    }
+
+    .miss-row, .unit-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+      border: 1px solid #e4e7ec;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+    }
+    .miss-row {
+      border-color: #fecdd3;
+      background: #fff1f2;
+    }
+    .miss-row strong, .unit-row strong {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .miss-row span, .unit-row span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .badge {
+      min-width: 34px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      text-align: center;
+      background: white;
+      color: #475467;
+      font-size: 14px;
+      font-weight: 1000;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-rows: auto minmax(470px, 1fr) auto auto;
+      gap: 12px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .scoreboard {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .team-card {
+      min-width: 0;
+      border-radius: 8px;
+      padding: 14px;
+      border: 2px solid transparent;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .team-card.red {
+      color: var(--red-deep);
+      border-color: rgba(225, 29, 72, 0.26);
+      background: linear-gradient(135deg, #fff1f2, #fff);
+    }
+    .team-card.blue {
+      color: var(--blue-deep);
+      border-color: rgba(37, 99, 235, 0.26);
+      background: linear-gradient(135deg, #eff6ff, #fff);
+      text-align: right;
+    }
+    .team-name {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: clamp(18px, 2.1vw, 30px);
+      font-weight: 1000;
+    }
+    .blue .team-name { flex-direction: row-reverse; }
+    .score {
+      display: block;
+      margin-top: 2px;
+      font-size: clamp(58px, 8vw, 108px);
+      line-height: 0.9;
+      font-weight: 1000;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .center-clock {
+      min-width: 176px;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #1f2937;
+      color: white;
+      background: #111827;
+      box-shadow: var(--shadow);
+    }
+    .clock-number {
+      font-size: clamp(52px, 6vw, 86px);
+      line-height: 0.9;
+      font-weight: 1000;
+      font-variant-numeric: tabular-nums;
+    }
+    .clock-label {
+      margin-top: 6px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .arena {
+      position: relative;
+      min-height: 470px;
+      overflow: hidden;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .arena-split {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 120px 1fr;
+    }
+    .red-field {
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(135deg, #be123c, #fb7185);
+      background-size: 44px 44px, 44px 44px, auto;
+    }
+    .blue-field {
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(135deg, #1d4ed8, #38bdf8);
+      background-size: 44px 44px, 44px 44px, auto;
+    }
+    .vs-lane {
+      display: grid;
+      place-items: center;
+      background: #fff;
+    }
+    .vs-mark {
+      width: 82px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: linear-gradient(135deg, var(--red), var(--blue));
+      border: 5px solid #fff;
+      box-shadow: 0 12px 30px rgba(16, 24, 40, 0.28);
+      font-size: 30px;
+      font-weight: 1000;
+    }
+
+    .question-layer {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+    .question-card {
+      width: min(830px, 100%);
+      border: 4px solid white;
+      border-radius: 8px;
+      padding: clamp(18px, 3vw, 32px);
+      color: white;
+      background: rgba(15, 23, 42, 0.94);
+      box-shadow: 0 24px 68px rgba(16, 24, 40, 0.38);
+      text-align: center;
+    }
+    .word-meta {
+      min-height: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .word-meta span {
+      border-radius: 999px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .word-meta .red-win { background: var(--red); }
+    .word-meta .blue-win { background: var(--blue); }
+    .word {
+      margin-top: 14px;
+      min-height: 1.05em;
+      overflow-wrap: anywhere;
+      font-size: clamp(48px, 8.5vw, 118px);
+      line-height: 1.02;
+      letter-spacing: 0;
+      font-weight: 1000;
+    }
+    .answer {
+      margin-top: 18px;
+      min-height: 112px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.09);
+    }
+    .meaning {
+      color: #fde68a;
+      font-size: clamp(26px, 3.5vw, 44px);
+      line-height: 1.18;
+      font-weight: 1000;
+    }
+    .example {
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: clamp(17px, 2vw, 24px);
+      line-height: 1.35;
+    }
+    .waiting {
+      color: rgba(255, 255, 255, 0.44);
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 1000;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      padding: 10px;
+      align-items: center;
+    }
+    .tool-buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 52px);
+      gap: 8px;
+    }
+
+    .word-drawer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      min-height: 180px;
+    }
+    .word-grid {
+      max-height: 210px;
+      overflow: auto;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      padding-right: 4px;
+    }
+    .word-item {
+      min-height: 58px;
+      border: 1px solid #e4e7ec;
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink);
+      text-align: left;
+    }
+    .word-item.active {
+      color: white;
+      background: #111827;
+      border-color: #111827;
+    }
+    .word-item strong, .word-item span {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .word-item span {
+      margin-top: 2px;
+      opacity: 0.68;
+      font-size: 13px;
+    }
+    .empty {
+      min-height: 96px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      color: var(--muted);
+      background: #f8fafc;
+      font-weight: 900;
+    }
+
+    body.fullscreen .topbar,
+    body.fullscreen .side,
+    body.fullscreen .word-drawer { display: none; }
+    body.fullscreen .app { max-width: none; padding: 8px; }
+    body.fullscreen .layout { grid-template-columns: 1fr; }
+    body.fullscreen .stage { grid-template-rows: auto minmax(0, 1fr) auto; }
+    body.fullscreen .arena { min-height: calc(100vh - 260px); }
+
+    @media (max-width: 1180px) {
+      .topbar, .layout, .word-drawer { grid-template-columns: 1fr; }
+      .side { grid-template-rows: auto auto auto; }
+      .review { max-height: none; }
+    }
+
+    @media (max-width: 760px) {
+      .app { padding: 8px; }
+      .topbar, .scoreboard, .controls, .stats, .import-actions, .setting-grid {
+        grid-template-columns: 1fr;
+      }
+      .center-clock { min-width: 0; }
+      .team-card.blue { text-align: left; }
+      .blue .team-name { flex-direction: row; }
+      .arena-split { grid-template-columns: 1fr; }
+      .red-field, .blue-field { display: none; }
+      .vs-lane { background: linear-gradient(135deg, #be123c, #1d4ed8); }
+      .tool-buttons { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .word-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
 </head>
 <body>
-<main class="app">
-<header><div><div class="pill">课本单词 PK</div><h1>把整本书单词倒进去，课堂直接开战</h1></div><section class="stats"><div class="stat"><span>单词</span><strong id="wc">0</strong></div><div class="stat"><span>已过</span><strong id="dc">0</strong></div><div class="stat"><span>错词</span><strong id="mc">0</strong></div></section></header>
-<section class="layout"><aside class="side"><section class="panel box"><div class="head"><h2>导入单词库</h2><button class="btn secondary" id="fileBtn">文件</button></div><textarea id="raw" spellcheck="false"></textarea><input id="file" class="hidden" type="file" accept=".txt,.csv"><div class="actions"><button class="btn" id="importBtn">倒入</button><button class="btn secondary" id="exportBtn">导出</button></div></section><section class="panel box"><div class="head"><h2>课本进度</h2><strong id="pt">0%</strong></div><div class="bar"><span id="pb"></span></div><div id="units"></div></section></aside>
-<section class="arenaWrap"><section class="score"><div class="team red"><span>红队</span><strong id="rs">0</strong></div><div class="team blue"><span>蓝队</span><strong id="bs">0</strong></div></section><section class="arena"><div class="arenaBg"><div class="redZone"></div><div class="timerCol"><div class="timer" id="sec">30</div><button class="btn green" id="start">开始</button><input class="timerInput" id="rt" type="number" min="10" max="180" value="30"></div><div class="blueZone"></div></div><div class="card"><article class="qcard"><div class="meta" id="meta"></div><div class="word" id="word">ready</div><div class="answer" id="ans"></div></article></div></section><section class="panel controls"><button class="btn red" id="redOk">红队答对</button><div class="tools"><button class="btn secondary" id="next">抽</button><button class="btn secondary" id="show">看</button><button class="btn secondary" id="wrong">错</button><button class="btn secondary" id="reset">清</button></div><button class="btn blue" id="blueOk">蓝队答对</button></section></section></section>
-<section class="bottom"><section class="panel box"><div class="head"><h2>当前词库</h2></div><div class="grid" id="wg"></div></section><section class="panel box"><div class="head"><h2>错词复盘</h2><button class="btn secondary" id="exportMiss">导出</button></div><div id="miss"></div></section></section>
-</main>
-<script>
-const sample=`Unit 1
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <div class="kicker"><span class="dot"></span><span>教师投屏版</span></div>
+        <h1>课本单词 PK</h1>
+      </div>
+      <section class="stats" aria-label="课堂统计">
+        <div class="stat"><span>单词</span><strong id="wordCount">0</strong></div>
+        <div class="stat"><span>已答</span><strong id="doneCount">0</strong></div>
+        <div class="stat"><span>错词</span><strong id="missCount">0</strong></div>
+        <div class="stat"><span>单元</span><strong id="unitCount">0</strong></div>
+      </section>
+    </header>
+
+    <section class="layout">
+      <aside class="side">
+        <section class="panel importer">
+          <div class="panel-head">
+            <h2>导入词库</h2>
+            <button class="btn secondary small" id="fileButton" type="button">选择文件</button>
+          </div>
+          <textarea id="rawImport" spellcheck="false"></textarea>
+          <input id="fileInput" class="hidden" type="file" accept=".txt,.csv" />
+          <div class="import-actions">
+            <button class="btn" id="importButton" type="button">倒入词库</button>
+            <button class="btn secondary" id="sampleButton" type="button">示例词库</button>
+          </div>
+        </section>
+
+        <section class="panel settings">
+          <div class="panel-head"><h2>上课设置</h2></div>
+          <div class="setting-grid">
+            <div class="field"><label for="redName">红队名称</label><input id="redName" value="红队" /></div>
+            <div class="field"><label for="blueName">蓝队名称</label><input id="blueName" value="蓝队" /></div>
+            <div class="field"><label for="roundTime">每题秒数</label><input id="roundTime" type="number" min="5" max="180" value="30" /></div>
+            <div class="field">
+              <label for="modeSelect">出题方式</label>
+              <select id="modeSelect">
+                <option value="word">看英文说中文</option>
+                <option value="meaning">看中文说英文</option>
+                <option value="mixed">随机混合</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel review">
+          <div class="panel-head">
+            <h2>错词复盘</h2>
+            <button class="btn secondary small" id="exportMissButton" type="button">导出</button>
+          </div>
+          <div class="bar" aria-hidden="true"><span id="progressBar"></span></div>
+          <div class="miss-list" id="missList"></div>
+        </section>
+      </aside>
+
+      <section class="stage">
+        <section class="scoreboard" aria-label="比分板">
+          <article class="team-card red">
+            <div class="team-name"><span id="redLabel">红队</span><span>答对</span></div>
+            <strong class="score" id="redScore">0</strong>
+          </article>
+          <article class="center-clock">
+            <strong class="clock-number" id="seconds">30</strong>
+            <span class="clock-label" id="clockLabel">准备</span>
+          </article>
+          <article class="team-card blue">
+            <div class="team-name"><span id="blueLabel">蓝队</span><span>答对</span></div>
+            <strong class="score" id="blueScore">0</strong>
+          </article>
+        </section>
+
+        <section class="arena">
+          <div class="arena-split" aria-hidden="true">
+            <div class="red-field"></div>
+            <div class="vs-lane"><div class="vs-mark">VS</div></div>
+            <div class="blue-field"></div>
+          </div>
+          <div class="question-layer">
+            <article class="question-card">
+              <div class="word-meta" id="wordMeta"></div>
+              <div class="word" id="questionText">ready</div>
+              <div class="answer" id="answerBox"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel controls" aria-label="比赛控制">
+          <button class="btn red" id="redCorrect" type="button">红队 +1</button>
+          <div class="tool-buttons">
+            <button class="btn green icon" id="startButton" type="button" title="开始">▶</button>
+            <button class="btn secondary icon" id="nextButton" type="button" title="抽词">抽</button>
+            <button class="btn secondary icon" id="showButton" type="button" title="答案">答</button>
+            <button class="btn secondary icon" id="wrongButton" type="button" title="错词">错</button>
+            <button class="btn secondary icon" id="fullscreenButton" type="button" title="投屏">屏</button>
+          </div>
+          <button class="btn blue" id="blueCorrect" type="button">蓝队 +1</button>
+        </section>
+
+        <section class="word-drawer">
+          <section class="panel word-bank">
+            <div class="panel-head">
+              <h2>当前词库</h2>
+              <button class="btn secondary small" id="exportButton" type="button">导出</button>
+            </div>
+            <div class="word-grid" id="wordGrid"></div>
+          </section>
+          <section class="panel word-bank">
+            <div class="panel-head">
+              <h2>单元统计</h2>
+              <button class="btn secondary small" id="resetButton" type="button">清零</button>
+            </div>
+            <div id="unitSummary"></div>
+          </section>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const sampleText = `Unit 1
 wealthy | adj. 富有的 | a wealthy family
 chat show | n. 访谈节目 | watch a chat show
+guard | n. 警卫；看守 | a security guard
+missing | adj. 丢失的；失踪的 | a missing child
 
 Unit 2
 business | n. 商业；生意 | run a business
-peaceful | adj. 安宁的；和平的 | a peaceful village`;
-const $=s=>document.querySelector(s);const E={raw:$('#raw'),file:$('#file'),fileBtn:$('#fileBtn'),importBtn:$('#importBtn'),exportBtn:$('#exportBtn'),exportMiss:$('#exportMiss'),wc:$('#wc'),dc:$('#dc'),mc:$('#mc'),pt:$('#pt'),pb:$('#pb'),units:$('#units'),rs:$('#rs'),bs:$('#bs'),sec:$('#sec'),start:$('#start'),rt:$('#rt'),meta:$('#meta'),word:$('#word'),ans:$('#ans'),redOk:$('#redOk'),blueOk:$('#blueOk'),next:$('#next'),show:$('#show'),wrong:$('#wrong'),reset:$('#reset'),wg:$('#wg'),miss:$('#miss')};
-function W(a,b,c,d){return{id:Date.now()+Math.random(),word:a,meaning:b,unit:c,examples:d,misses:0,wins:0}}let S={words:[W('wealthy','adj. 富有的','Unit 1','a wealthy family'),W('chat show','n. 访谈节目','Unit 1','watch a chat show'),W('business','n. 商业；生意','Unit 2','run a business'),W('peaceful','adj. 安宁的；和平的','Unit 2','a peaceful village'),W('conversation','n. 谈话；交谈','Unit 3','have a conversation')],i:0,show:false,sec:30,rt:30,run:false,red:0,blue:0,win:null,t:null};
-function esc(x){return String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}function cur(){return S.words[S.i]||S.words[0]}function parse(raw){let u='未分组';return raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).flatMap(line=>{if(/^(unit|module|lesson|book)\s*[\w\d\u4e00-\u9fa5 -]*$/i.test(line)){u=line;return[]}let p=line.split(/\s*(?:\||,|\t|，|；|;)\s*/).map(x=>x.trim()).filter(Boolean);return p[0]?[W(p[0],p[1]||'待补充释义',p[3]||u,p[2]||'')]:[]})}
-function save(){localStorage.setItem('word-pk-state',JSON.stringify({words:S.words,red:S.red,blue:S.blue,rt:S.rt}))}function load(){E.raw.value=sample;try{let p=JSON.parse(localStorage.getItem('word-pk-state')||'{}');if(p.words?.length)S.words=p.words;S.red=p.red||0;S.blue=p.blue||0;S.rt=p.rt||30;S.sec=S.rt;E.rt.value=S.rt}catch{}}
-function render(){let m=S.words.filter(x=>x.misses>0),done=S.words.reduce((a,b)=>a+b.wins,0),prog=Math.round(done/Math.max(S.words.length,1)*100),c=cur();E.wc.textContent=S.words.length;E.dc.textContent=done;E.mc.textContent=m.length;E.pt.textContent=prog+'%';E.pb.style.width=prog+'%';E.rs.textContent=S.red;E.bs.textContent=S.blue;E.sec.textContent=S.sec;E.start.textContent=S.run?'暂停':'开始';E.meta.innerHTML='<span>'+esc(c.unit)+'</span>'+(S.win==='red'?'<span class="rw">红队得分</span>':S.win==='blue'?'<span class="bw">蓝队得分</span>':'');E.word.textContent=c.word;E.ans.innerHTML=S.show?'<p class="meaning">'+esc(c.meaning)+'</p>'+(c.examples?'<p class="example">'+esc(c.examples)+'</p>':''):'<div class="waiting">等待抢答</div>';let units=new Map;S.words.forEach(x=>units.set(x.unit,(units.get(x.unit)||0)+1));E.units.innerHTML=[...units].map(([u,n])=>'<div class="row"><strong>'+esc(u)+'</strong><span class="badge">'+n+'</span></div>').join('');E.wg.innerHTML=S.words.map((x,i)=>'<button class="item '+(i===S.i?'active':'')+'" data-i="'+i+'"><strong>'+esc(x.word)+'</strong><span>'+esc(x.meaning)+'</span></button>').join('');E.miss.innerHTML=m.length?m.map(x=>'<div class="row miss"><div><strong>'+esc(x.word)+'</strong><p>'+esc(x.meaning)+'</p></div><span class="badge">'+x.misses+'</span></div>').join(''):'<div class="empty">还没有错词</div>';save()}
-function stop(){if(S.t)clearInterval(S.t);S.t=null;S.run=false}function start(){stop();S.run=true;S.t=setInterval(()=>{S.sec--;if(S.sec<=0){S.sec=0;stop()}render()},1000)}function next(){if(S.words.length>1){let n=Math.floor(Math.random()*S.words.length);while(n===S.i)n=Math.floor(Math.random()*S.words.length);S.i=n}S.show=false;S.win=null;S.sec=S.rt;start();render()}function ok(team){cur().wins++;team==='red'?S.red++:S.blue++;S.win=team;S.show=true;stop();render()}function wrong(){cur().misses++;S.show=true;stop();render()}function reset(){S.red=0;S.blue=0;S.win=null;S.sec=S.rt;S.show=false;S.words=S.words.map(x=>({...x,misses:0,wins:0}));stop();render()}function exp(){let m=S.words.filter(x=>x.misses>0),list=m.length?m:S.words,c=list.map(x=>[x.unit,x.word,x.meaning,x.examples].map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n'),b=new Blob(['\ufeff'+c],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=m.length?'错词复盘.csv':'单词库.csv';a.click();URL.revokeObjectURL(u)}
-E.importBtn.onclick=()=>{let w=parse(E.raw.value);if(w.length){S.words=w;S.i=0;S.show=false;S.win=null;S.sec=S.rt;stop();render()}};E.fileBtn.onclick=()=>E.file.click();E.file.onchange=async e=>{let f=e.target.files[0];if(f){let t=await f.text();E.raw.value=t;let w=parse(t);if(w.length){S.words=w;S.i=0;render()}}};E.exportBtn.onclick=exp;E.exportMiss.onclick=exp;E.start.onclick=()=>{S.run?stop():start();render()};E.rt.onchange=()=>{S.rt=Math.min(Math.max(Number(E.rt.value)||30,10),180);S.sec=S.rt;render()};E.redOk.onclick=()=>ok('red');E.blueOk.onclick=()=>ok('blue');E.next.onclick=next;E.show.onclick=()=>{S.show=!S.show;render()};E.wrong.onclick=wrong;E.reset.onclick=reset;E.wg.onclick=e=>{let b=e.target.closest('[data-i]');if(b){S.i=Number(b.dataset.i);S.show=false;S.sec=S.rt;S.win=null;render()}};load();render();
-</script>
+peaceful | adj. 安宁的；和平的 | a peaceful village
+method | n. 方法 | a useful method
+chance | n. 机会 | a good chance`;
+
+    const state = {
+      words: [],
+      activeIndex: 0,
+      answerVisible: false,
+      seconds: 30,
+      roundTime: 30,
+      running: false,
+      redScore: 0,
+      blueScore: 0,
+      redName: "红队",
+      blueName: "蓝队",
+      mode: "word",
+      lastWinner: null,
+      currentPromptMode: "word",
+      timer: null,
+    };
+
+    const el = {
+      rawImport: document.querySelector("#rawImport"),
+      fileInput: document.querySelector("#fileInput"),
+      fileButton: document.querySelector("#fileButton"),
+      importButton: document.querySelector("#importButton"),
+      sampleButton: document.querySelector("#sampleButton"),
+      exportButton: document.querySelector("#exportButton"),
+      exportMissButton: document.querySelector("#exportMissButton"),
+      wordCount: document.querySelector("#wordCount"),
+      doneCount: document.querySelector("#doneCount"),
+      missCount: document.querySelector("#missCount"),
+      unitCount: document.querySelector("#unitCount"),
+      progressBar: document.querySelector("#progressBar"),
+      missList: document.querySelector("#missList"),
+      redName: document.querySelector("#redName"),
+      blueName: document.querySelector("#blueName"),
+      redLabel: document.querySelector("#redLabel"),
+      blueLabel: document.querySelector("#blueLabel"),
+      roundTime: document.querySelector("#roundTime"),
+      modeSelect: document.querySelector("#modeSelect"),
+      redScore: document.querySelector("#redScore"),
+      blueScore: document.querySelector("#blueScore"),
+      seconds: document.querySelector("#seconds"),
+      clockLabel: document.querySelector("#clockLabel"),
+      wordMeta: document.querySelector("#wordMeta"),
+      questionText: document.querySelector("#questionText"),
+      answerBox: document.querySelector("#answerBox"),
+      redCorrect: document.querySelector("#redCorrect"),
+      blueCorrect: document.querySelector("#blueCorrect"),
+      startButton: document.querySelector("#startButton"),
+      nextButton: document.querySelector("#nextButton"),
+      showButton: document.querySelector("#showButton"),
+      wrongButton: document.querySelector("#wrongButton"),
+      fullscreenButton: document.querySelector("#fullscreenButton"),
+      resetButton: document.querySelector("#resetButton"),
+      wordGrid: document.querySelector("#wordGrid"),
+      unitSummary: document.querySelector("#unitSummary"),
+    };
+
+    function makeWord(text, meaning, unit, example) {
+      return {
+        id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
+        word: text,
+        meaning,
+        unit,
+        example,
+        misses: 0,
+        wins: 0,
+      };
+    }
+
+    function parseWords(raw) {
+      let currentUnit = "未分组";
+      return raw
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .flatMap((line) => {
+          const cleanLine = line.replace(/^[-*]\s*/, "");
+          if (/^(unit|module|lesson|book)\s*[\w\d\u4e00-\u9fa5 -]*$/i.test(cleanLine)) {
+            currentUnit = cleanLine;
+            return [];
+          }
+          const parts = cleanLine
+            .split(/\s*(?:\||\t|，|；|;)\s*/)
+            .map((part) => part.trim())
+            .filter(Boolean);
+          let term = parts[0] || "";
+          let meaning = parts[1] || "";
+          let example = parts[2] || "";
+          let unit = parts[3] || currentUnit;
+
+          if (parts.length === 1) {
+            const match = cleanLine.match(/^([A-Za-z][A-Za-z .'-]+)\s+(.+)$/);
+            if (match) {
+              term = match[1].trim();
+              meaning = match[2].trim();
+            }
+          }
+          if (!term) return [];
+          return [makeWord(term, meaning || "待补充释义", unit, example)];
+        });
+    }
+
+    function save() {
+      localStorage.setItem("word-pk-classroom-v2", JSON.stringify({
+        words: state.words,
+        activeIndex: state.activeIndex,
+        redScore: state.redScore,
+        blueScore: state.blueScore,
+        redName: state.redName,
+        blueName: state.blueName,
+        roundTime: state.roundTime,
+        mode: state.mode,
+      }));
+    }
+
+    function load() {
+      const saved = localStorage.getItem("word-pk-classroom-v2") || localStorage.getItem("word-pk-state");
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          state.words = Array.isArray(data.words) && data.words.length ? data.words : parseWords(sampleText);
+          state.activeIndex = Math.min(data.activeIndex || 0, state.words.length - 1);
+          state.redScore = data.redScore || 0;
+          state.blueScore = data.blueScore || 0;
+          state.redName = data.redName || "红队";
+          state.blueName = data.blueName || "蓝队";
+          state.roundTime = data.roundTime || 30;
+          state.mode = data.mode || "word";
+        } catch {
+          state.words = parseWords(sampleText);
+        }
+      } else {
+        state.words = parseWords(sampleText);
+      }
+      state.seconds = state.roundTime;
+      el.rawImport.value = sampleText;
+      el.redName.value = state.redName;
+      el.blueName.value = state.blueName;
+      el.roundTime.value = state.roundTime;
+      el.modeSelect.value = state.mode;
+    }
+
+    function activeWord() {
+      return state.words[state.activeIndex] || makeWord("ready", "请先导入词库", "课堂", "");
+    }
+
+    function getPromptMode() {
+      if (state.mode === "mixed") return Math.random() > 0.5 ? "word" : "meaning";
+      return state.mode;
+    }
+
+    function pickNext() {
+      if (state.words.length > 1) {
+        let next = Math.floor(Math.random() * state.words.length);
+        while (next === state.activeIndex) next = Math.floor(Math.random() * state.words.length);
+        state.activeIndex = next;
+      }
+      state.currentPromptMode = getPromptMode();
+      state.answerVisible = false;
+      state.lastWinner = null;
+      state.seconds = state.roundTime;
+      startTimer();
+      render();
+    }
+
+    function markCorrect(team) {
+      const current = activeWord();
+      current.wins += 1;
+      if (team === "red") state.redScore += 1;
+      if (team === "blue") state.blueScore += 1;
+      state.lastWinner = team;
+      state.answerVisible = true;
+      stopTimer();
+      render();
+    }
+
+    function markWrong() {
+      activeWord().misses += 1;
+      state.answerVisible = true;
+      stopTimer();
+      render();
+    }
+
+    function startTimer() {
+      stopTimer();
+      state.running = true;
+      state.timer = window.setInterval(() => {
+        state.seconds = Math.max(0, state.seconds - 1);
+        if (state.seconds === 0) stopTimer();
+        render();
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (state.timer) window.clearInterval(state.timer);
+      state.timer = null;
+      state.running = false;
+    }
+
+    function toggleTimer() {
+      state.running ? stopTimer() : startTimer();
+      render();
+    }
+
+    function resetMatch() {
+      stopTimer();
+      state.redScore = 0;
+      state.blueScore = 0;
+      state.seconds = state.roundTime;
+      state.answerVisible = false;
+      state.lastWinner = null;
+      state.words = state.words.map((item) => ({ ...item, misses: 0, wins: 0 }));
+      render();
+    }
+
+    function loadWords(words) {
+      if (!words.length) return;
+      stopTimer();
+      state.words = words;
+      state.activeIndex = 0;
+      state.currentPromptMode = getPromptMode();
+      state.answerVisible = false;
+      state.lastWinner = null;
+      state.seconds = state.roundTime;
+      render();
+    }
+
+    function render() {
+      const current = activeWord();
+      const misses = state.words.filter((item) => item.misses > 0);
+      const units = new Map();
+      state.words.forEach((item) => units.set(item.unit || "未分组", (units.get(item.unit || "未分组") || 0) + 1));
+      const done = state.words.reduce((sum, item) => sum + item.wins, 0);
+      const progress = Math.round((done / Math.max(state.words.length, 1)) * 100);
+      const isMeaningMode = state.currentPromptMode === "meaning";
+
+      el.wordCount.textContent = state.words.length;
+      el.doneCount.textContent = done;
+      el.missCount.textContent = misses.length;
+      el.unitCount.textContent = units.size;
+      el.progressBar.style.width = `${progress}%`;
+      el.redScore.textContent = state.redScore;
+      el.blueScore.textContent = state.blueScore;
+      el.redLabel.textContent = state.redName;
+      el.blueLabel.textContent = state.blueName;
+      el.seconds.textContent = state.seconds;
+      el.clockLabel.textContent = state.running ? "倒计时" : state.seconds === 0 ? "时间到" : "准备";
+      el.startButton.textContent = state.running ? "⏸" : "▶";
+
+      el.wordMeta.innerHTML = "";
+      appendMeta(current.unit || "未分组");
+      appendMeta(isMeaningMode ? "说英文" : "说中文");
+      if (state.lastWinner === "red") appendMeta(`${state.redName} 得分`, "red-win");
+      if (state.lastWinner === "blue") appendMeta(`${state.blueName} 得分`, "blue-win");
+
+      el.questionText.textContent = isMeaningMode ? current.meaning : current.word;
+      const answerText = isMeaningMode ? current.word : current.meaning;
+      el.answerBox.innerHTML = state.answerVisible
+        ? `<div><p class="meaning">${escapeHtml(answerText)}</p>${current.example ? `<p class="example">${escapeHtml(current.example)}</p>` : ""}</div>`
+        : `<div class="waiting">等待抢答</div>`;
+
+      el.wordGrid.innerHTML = state.words.map((item, index) => `
+        <button class="word-item ${index === state.activeIndex ? "active" : ""}" type="button" data-index="${index}">
+          <strong>${escapeHtml(item.word)}</strong><span>${escapeHtml(item.meaning)}</span>
+        </button>`).join("");
+
+      el.unitSummary.innerHTML = Array.from(units.entries()).map(([unit, count]) => `
+        <div class="unit-row"><div><strong>${escapeHtml(unit)}</strong><span>${count} 个单词</span></div><b class="badge">${count}</b></div>
+      `).join("");
+
+      el.missList.innerHTML = misses.length
+        ? misses.map((item) => `
+          <div class="miss-row"><div><strong>${escapeHtml(item.word)}</strong><span>${escapeHtml(item.meaning)}</span></div><b class="badge">${item.misses}</b></div>
+        `).join("")
+        : `<div class="empty">还没有错词</div>`;
+
+      save();
+    }
+
+    function appendMeta(text, className = "") {
+      const span = document.createElement("span");
+      span.className = className;
+      span.textContent = text;
+      el.wordMeta.appendChild(span);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function exportCsv(onlyMisses = false) {
+      const list = onlyMisses ? state.words.filter((item) => item.misses > 0) : state.words;
+      const rows = list.map((item) =>
+        [item.unit, item.word, item.meaning, item.example, item.misses, item.wins].map(csvCell).join(","),
+      );
+      const blob = new Blob([`\ufeff单元,单词,释义,例句,错词次数,答对次数\n${rows.join("\n")}`], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = onlyMisses ? "错词复盘.csv" : "课本单词库.csv";
+      anchor.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function csvCell(text) {
+      return `"${String(text ?? "").replaceAll('"', '""')}"`;
+    }
+
+    el.importButton.addEventListener("click", () => loadWords(parseWords(el.rawImport.value)));
+    el.sampleButton.addEventListener("click", () => {
+      el.rawImport.value = sampleText;
+      loadWords(parseWords(sampleText));
+    });
+    el.fileButton.addEventListener("click", () => el.fileInput.click());
+    el.fileInput.addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      el.rawImport.value = text;
+      loadWords(parseWords(text));
+    });
+    el.redName.addEventListener("input", () => {
+      state.redName = el.redName.value.trim() || "红队";
+      render();
+    });
+    el.blueName.addEventListener("input", () => {
+      state.blueName = el.blueName.value.trim() || "蓝队";
+      render();
+    });
+    el.roundTime.addEventListener("change", () => {
+      state.roundTime = Math.min(Math.max(Number(el.roundTime.value) || 30, 5), 180);
+      state.seconds = state.roundTime;
+      render();
+    });
+    el.modeSelect.addEventListener("change", () => {
+      state.mode = el.modeSelect.value;
+      state.currentPromptMode = getPromptMode();
+      state.answerVisible = false;
+      render();
+    });
+    el.exportButton.addEventListener("click", () => exportCsv(false));
+    el.exportMissButton.addEventListener("click", () => exportCsv(true));
+    el.redCorrect.addEventListener("click", () => markCorrect("red"));
+    el.blueCorrect.addEventListener("click", () => markCorrect("blue"));
+    el.startButton.addEventListener("click", toggleTimer);
+    el.nextButton.addEventListener("click", pickNext);
+    el.showButton.addEventListener("click", () => {
+      state.answerVisible = !state.answerVisible;
+      render();
+    });
+    el.wrongButton.addEventListener("click", markWrong);
+    el.resetButton.addEventListener("click", resetMatch);
+    el.fullscreenButton.addEventListener("click", () => document.body.classList.toggle("fullscreen"));
+    el.wordGrid.addEventListener("click", (event) => {
+      const item = event.target.closest("[data-index]");
+      if (!item) return;
+      stopTimer();
+      state.activeIndex = Number(item.dataset.index);
+      state.currentPromptMode = getPromptMode();
+      state.answerVisible = false;
+      state.lastWinner = null;
+      state.seconds = state.roundTime;
+      render();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.target.matches("input, textarea, select")) return;
+      if (event.key === " ") {
+        event.preventDefault();
+        toggleTimer();
+      }
+      if (event.key === "Enter") pickNext();
+      if (event.key === "1") markCorrect("red");
+      if (event.key === "2") markCorrect("blue");
+      if (event.key.toLowerCase() === "a") {
+        state.answerVisible = !state.answerVisible;
+        render();
+      }
+      if (event.key.toLowerCase() === "w") markWrong();
+    });
+
+    load();
+    state.currentPromptMode = getPromptMode();
+    render();
+  </script>
 </body>
 </html>
